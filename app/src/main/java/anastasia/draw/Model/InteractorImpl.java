@@ -6,7 +6,7 @@ import org.json.JSONException;
  * Created by Администратор on 10.12.2017.
  */
 
-public class InteractorImpl implements Interactor, Client.PartnerListener {
+public class InteractorImpl implements Interactor, ClientImpl.PartnerListener {
 
     @Override
     public void setInteractorListener(InteractorListener interactorListener) {

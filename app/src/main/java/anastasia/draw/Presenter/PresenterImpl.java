@@ -1,6 +1,7 @@
 package anastasia.draw.Presenter;
 
 import anastasia.draw.Model.Client;
+import anastasia.draw.Model.ClientImpl;
 import anastasia.draw.Model.Interactor;
 import anastasia.draw.Model.InteractorImpl;
 import anastasia.draw.Model.Model;
@@ -20,7 +21,7 @@ public class PresenterImpl implements Presenter, Interactor.InteractorListener{
 
     public PresenterImpl(PaintView paintView) {
         if (socketOn) {
-            client = new Client();
+            client = new ClientImpl();
             client.createSocket();
 
         }
