@@ -11,10 +11,7 @@ import anastasia.draw.View.PaintView;
  * Created by Администратор on 10.12.2017.
  */
 
-public class PresenterImpl implements Presenter,
-        Interactor.InteractorPointListener, Interactor.InteractorClearListener,
-        Interactor.InteractorCircleListener, Interactor.InteractorLineListener,
-        Interactor.InteractorRectListener {
+public class PresenterImpl implements Presenter, Interactor.InteractorListener{
 
     private PaintView paintView;
     private MyAbstractModel model;
@@ -29,15 +26,10 @@ public class PresenterImpl implements Presenter,
         }
         this.paintView = paintView;
         this.interactor = new InteractorImpl(client);
-        interactor.setInteractorPointListener(this);
-        interactor.setInteractorLineListener(this);
-        interactor.setInteractorCircleListener(this);
-        interactor.setInteractorClearListener(this);
-        interactor.setInteractorRectListener(this);
+
+        interactor.setInteractorListener(this);
 
         this.socketOn = false;
-
-
     }
 
     private Interactor interactor;

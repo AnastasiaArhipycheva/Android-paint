@@ -27,9 +27,7 @@ import anastasia.draw.R;
 @EActivity(R.layout.activity_main)
 
 public class MainActivity extends Activity
-        implements DrawingView.PointListener,
-        DrawingView.LineListener, DrawingView.CircleListener,
-        DrawingView.RectListener, PaintView{
+        implements DrawingView.DrawListener, PaintView {
 
 
     Presenter presenter;
@@ -135,10 +133,8 @@ public class MainActivity extends Activity
     @AfterViews
     void initPaint() {
         presenter  = new PresenterImpl(this);
-        drawView.setPointListener(this);
-        drawView.setLineListener(this);
-        drawView.setCircleListener(this);
-        drawView.setRectListener(this);
+
+        drawView.setDrawListener(this);
         currPaint = (ImageButton)paintLayout.getChildAt(0);
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
     }
@@ -181,11 +177,6 @@ public class MainActivity extends Activity
     @Override
     public void RectDraw(int touchX1, int touchX2, int touchY1, int touchY2, int paintColor) {
         presenter.onDrawRect(touchX1, touchX2, touchY1, touchY2, paintColor);
-    }
-
-    @Override
-    public void drawUpdates() {
-
     }
 
     @UiThread

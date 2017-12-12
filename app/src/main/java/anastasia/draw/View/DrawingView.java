@@ -14,31 +14,11 @@ import android.view.View;
 
 public class DrawingView extends View{
 
-    //Listeners
-
-    public void setPointListener(PointListener pointListener) {
-        this.pointListener = pointListener;
+    public void setDrawListener(DrawListener drawListener) {
+        this.drawListener = drawListener;
     }
 
-    private PointListener pointListener;
-
-    public void setLineListener(LineListener lineListener) {
-        this.lineListener = lineListener;
-    }
-
-    private LineListener lineListener;
-
-    public void setCircleListener(CircleListener circleListener) {
-        this.circleListener = circleListener;
-    }
-
-    private CircleListener circleListener;
-
-    public void setRectListener(RectListener rectListener) {
-        this.rectListener = rectListener;
-    }
-
-    private RectListener rectListener;
+    private DrawListener drawListener;
 
     private int currentAction = 0;
 
@@ -161,14 +141,14 @@ public class DrawingView extends View{
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:  //установка новой точки
                         drawPath.moveTo(touchX, touchY);
-                        if (pointListener != null )
-                            pointListener.OnPointTouch((int)touchX, (int)touchY, paintColor);
+                        if (drawListener != null)
+                            drawListener.OnPointTouch((int)touchX, (int)touchY, paintColor);
                         setXOY(touchX, touchY);
                         break;
                     case MotionEvent.ACTION_MOVE:   //установка линий
                         drawPath.lineTo(touchX, touchY);
-                        if (pointListener != null )
-                            pointListener.OnPointTouch((int)touchX, (int)touchY, paintColor);
+                        if (drawListener != null)
+                            drawListener.OnPointTouch((int)touchX, (int)touchY, paintColor);
                         break;
                     case MotionEvent.ACTION_UP:  //прекращение касания
                         drawCanvas.drawPath(drawPath, drawPaint);
@@ -216,8 +196,8 @@ public class DrawingView extends View{
                     case MotionEvent.ACTION_UP:  //прекращение касания
                         drawPath.reset();
                         drawPath = DrawCircle(touchX, touchY);
-                        if (circleListener != null)
-                            circleListener.CircleDraw((int)getSTX(), (int)getSTY(),(int)touchX, (int)touchY, paintColor);
+                        if (drawListener != null)
+                            drawListener.CircleDraw((int)getSTX(), (int)getSTY(),(int)touchX, (int)touchY, paintColor);
                         drawCanvas.drawPath(drawPath, drawPaint);
                         drawPath.reset();
                         break;
@@ -240,8 +220,8 @@ public class DrawingView extends View{
                     case MotionEvent.ACTION_UP:  //прекращение касания
                         drawPath.reset();
                         drawPath = DrawRect(touchX, touchY);
-                        if (rectListener != null)
-                            rectListener.RectDraw((int)getSTX(), (int)getSTY(),(int)touchX, (int)touchY, paintColor);
+                        if (drawListener != null)
+                            drawListener.RectDraw((int)getSTX(), (int)getSTY(),(int)touchX, (int)touchY, paintColor);
                         drawCanvas.drawPath(drawPath, drawPaint);
                         drawPath.reset();
                         break;
@@ -274,8 +254,8 @@ public class DrawingView extends View{
         Path line2d = new Path();
         line2d.moveTo(getSTX(), getSTY());
         line2d.lineTo(x2, y2);
-        if (lineListener != null)
-            lineListener.LineDraw((int)getSTX(), (int)getSTY(),(int)x2, (int)y2, paintColor);
+        if (drawListener != null)
+            drawListener.LineDraw((int)getSTX(), (int)getSTY(),(int)x2, (int)y2, paintColor);
         return line2d;
     }
 
@@ -293,21 +273,13 @@ public class DrawingView extends View{
         return rect2d;
     }
 
-    public interface PointListener {
+    public interface DrawListener {
         public void OnPointTouch(int touchX, int touchY, int paintColor);
-    }
-
-    public interface LineListener {
         public void LineDraw(int touchX1, int touchX2, int touchY1, int touchY2, int paintColor);
-    }
-
-    public interface CircleListener {
         public void CircleDraw(int touchX1, int touchX2, int touchY1, int touchY2, int paintColor);
-    }
-
-    public interface RectListener {
         public void RectDraw(int touchX1, int touchX2, int touchY1, int touchY2, int paintColor);
     }
+
 
 }
 
